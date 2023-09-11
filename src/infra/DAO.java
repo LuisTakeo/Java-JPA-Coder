@@ -1,5 +1,6 @@
 package infra;
 
+
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -7,7 +8,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
-import modelo.basico.Produto;
 
 
 
@@ -77,6 +77,24 @@ public class DAO<E> {
 		
 		return query.getResultList();
 		
+	}
+	
+	public List<E> consultar(String nomeConsulta, Object... params){
+		TypedQuery<E> query = em.createNamedQuery(nomeConsulta, classe);
+		
+		for (int i = 0; i < params.length; i += 2) {
+			query.setParameter(params[i].toString(), params[i + 1]); 
+		}
+		return query.getResultList();
+	}
+	
+	public E consultarUm(String nomeConsulta, Object... params){
+		TypedQuery<E> query = em.createNamedQuery(nomeConsulta, classe);
+		
+		for (int i = 0; i < params.length; i += 2) {
+			query.setParameter(params[i].toString(), params[i + 1]); 
+		}
+		return query.getResultList();
 	}
 	
 	public void fechar() {
